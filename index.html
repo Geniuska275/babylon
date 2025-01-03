@@ -18,6 +18,133 @@
     </head>
     <body>
         <canvas id="renderCanvas"></canvas>
+        <!-- <script>
+
+    // Initialize Babylon.js Scene
+const canvas = document.getElementById("renderCanvas");
+const engine = new BABYLON.Engine(canvas, true);
+
+const createScene = () => {
+    const scene = new BABYLON.Scene(engine);
+
+    // 📸 Camera
+    const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 2, Math.PI / 4, 10, new BABYLON.Vector3(0, 1, 0), scene);
+    camera.attachControl(canvas, true);
+
+    // 💡 Light
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0), scene);
+
+    // 🏢 FLOOR
+    const floor = BABYLON.MeshBuilder.CreateGround("floor", { width: 8, height: 8 }, scene);
+    const floorMat = new BABYLON.StandardMaterial("floorMat", scene);
+    floorMat.diffuseColor = new BABYLON.Color3(0.7, 0.7, 0.7);
+    floor.material = floorMat;
+
+    
+    // 🏠 ROOF
+    const roof = BABYLON.MeshBuilder.CreateBox("roof", { width: 8, height: 0.1, depth: 8 }, scene);
+    roof.position.set(0, 4, 0);
+    const roofMat = new BABYLON.StandardMaterial("roofMat", scene);
+    roofMat.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+    roof.material = roofMat;
+     // 🚪 CREATE DOOR FRAME OPENING IN WALL
+
+// Create Wall with Door Opening using CSG (Constructive Solid Geometry)
+const CSG = BABYLON.CSG;
+
+// Main Wall
+const wall = BABYLON.MeshBuilder.CreateBox("wall", { width: 8, height: 4, depth: 0.1 }, scene);
+wall.position.set(0, 2, -4);
+const wallMat = new BABYLON.StandardMaterial("wallMat", scene);
+wallMat.diffuseColor = new BABYLON.Color3(0.8, 0.8, 0.9);
+wall.material = wallMat;
+
+// Create Door Opening in Wall
+const doorOpening = BABYLON.MeshBuilder.CreateBox("doorOpening", { width: 1.2, height: 2, depth: 0.2 }, scene);
+doorOpening.position.set(-2, 1, -3.95);
+
+// Subtract Door Opening from Wall
+const wallCSG = BABYLON.CSG.FromMesh(wall);
+const doorCSG = BABYLON.CSG.FromMesh(doorOpening);
+const wallWithDoor = wallCSG.subtract(doorCSG).toMesh("wallWithDoor", wallMat, scene);
+
+// Clean up temporary meshes
+wall.dispose();
+doorOpening.dispose();
+
+// 🚪 CREATE DOOR
+const door = BABYLON.MeshBuilder.CreateBox("door", { width: 1.2, height: 2, depth: 0.05 }, scene);
+door.position.set(-2, 1, -3.92); // Slight offset for depth
+const doorMat = new BABYLON.StandardMaterial("doorMat", scene);
+doorMat.diffuseColor = new BABYLON.Color3(0.5, 0.3, 0.1);
+door.material = doorMat;
+
+// Set door pivot (hinge)
+door.setPivotMatrix(BABYLON.Matrix.Translation(0.6, 0, 0)); // Pivot on the edge
+
+// 🚪 DOOR ANIMATION
+const doorAnimation = new BABYLON.Animation(
+    "doorAnimation",
+    "rotation.y",
+    30,
+    BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+    BABYLON.Animation.ANIMATIONLOOPMODE_YOYO
+);
+
+const doorKeys = [
+    { frame: 0, value: 0 },             // Closed
+    { frame: 30, value: -Math.PI / 4 }  // Slightly Open (45°)
+];
+
+doorAnimation.setKeys(doorKeys);
+door.animations = [doorAnimation];
+
+// 🖱️ TOGGLE DOOR OPEN/CLOSE ON CLICK
+let isDoorOpen = false;
+scene.onPointerDown = () => {
+    isDoorOpen = !isDoorOpen;
+    scene.beginAnimation(door, 0, 30, false);
+};
+
+
+    // 🪑 FURNITURE (Desk & Chair)
+    const desk = BABYLON.MeshBuilder.CreateBox("desk", { width: 2, height: 0.1, depth: 1 }, scene);
+    desk.position.set(0, 0.55, 0);
+    const deskMat = new BABYLON.StandardMaterial("deskMat", scene);
+    deskMat.diffuseColor = new BABYLON.Color3(0.6, 0.4, 0.2);
+    desk.material = deskMat;
+
+    const chair = BABYLON.MeshBuilder.CreateBox("chair", { width: 0.6, height: 1, depth: 0.6 }, scene);
+    chair.position.set(0, 0.5, -1.5);
+    chair.material = deskMat;
+
+    // 🗄️ CABINET
+    const cabinet = BABYLON.MeshBuilder.CreateBox("cabinet", { width: 1, height: 2, depth: 0.5 }, scene);
+    cabinet.position.set(3, 1, -2);
+    const cabinetMat = new BABYLON.StandardMaterial("cabinetMat", scene);
+    cabinetMat.diffuseColor = new BABYLON.Color3(0.4, 0.4, 0.4);
+    cabinet.material = cabinetMat;
+
+    return scene;
+};
+
+// Start Babylon.js Scene
+const scene = createScene();
+engine.runRenderLoop(() => {
+    scene.render();
+});
+
+// Resize Event
+window.addEventListener("resize", () => {
+    engine.resize();
+});
+
+const easing = new BABYLON.CubicEase();
+easing.setEasingMode(BABYLON.EasingFunction.EASINGMODE_EASEINOUT);
+doorAnimation.setEasingFunction(easing);
+
+
+        </script> -->
         <!-- <script src="index.js"></script> -->
         <!-- <script>
               const canvas = document.getElementById("renderCanvas");
@@ -169,7 +296,7 @@ const canvas = document.getElementById("renderCanvas");
 
   const walls = [];
   const wallConfigs = [
-    { name: "frontWall", position: [0, 2, -5], rotation: [0, 0, 0] },
+    // { name: "frontWall", position: [0, 2, -5], rotation: [0, 0, 0] },
     { name: "backWall", position: [0, 2, 5], rotation: [0, 0, 0] },
     { name: "leftWall", position: [-5, 2, 0], rotation: [0, Math.PI / 2, 0] },
     { name: "rightWall", position: [5, 2, 0], rotation: [0, Math.PI / 2, 0] },
@@ -201,7 +328,7 @@ const createFileCabinets = (scene) => {
       { width: 2, height: 2, depth: 0.5 },
       scene
     );
-    cabinet.position.set(-4 + i * 2.5, 3, -4.8);
+    cabinet.position.set(-4 + i * 2.5, 3, 4.8);
     cabinet.material = cabinetMaterial;
 
     // Add Handles
@@ -210,7 +337,7 @@ const createFileCabinets = (scene) => {
       { width: 0.1, height: 0.1, depth: 0.1 },
       scene
     );
-    handle.position.set(-4 + i * 2.5, 3, -4.55);
+    handle.position.set(-4 + i * 2.5, 3, 4.55);
     const handleMat = new BABYLON.StandardMaterial("handleMat", scene);
     handleMat.diffuseColor = new BABYLON.Color3(0.3, 0.3, 0.3);
     handle.material = handleMat;
@@ -260,26 +387,86 @@ const createFurniture = (scene) => {
 createFurniture(scene);
 
 const createDoor = (scene) => {
-  const door = BABYLON.MeshBuilder.CreateBox(
-    "door",
-    { width: 1.5, height: 2.5, depth: 0.1 },
-    scene
-  );
-  door.position.set(3, 1.25, 5.1); // Slightly beyond the wall
-  const doorMat = new BABYLON.StandardMaterial("doorMat", scene);
-  doorMat.diffuseColor = new BABYLON.Color3(0, 0, 0);
-  door.material = doorMat;
 
-  // Add a Door Handle
-  const handle = BABYLON.MeshBuilder.CreateCylinder(
-    "handle",
-    { diameter: 0.1, height: 0.2 },
-    scene
-  );
-  handle.position.set(-2.5, 1.25, -5.05);
-  const handleMat = new BABYLON.StandardMaterial("handleMat", scene);
-  handleMat.diffuseColor = new BABYLON.Color3(0.8, 0.8, 0.9);
-  handle.material = handleMat;
+      // Create Wall with Door Opening using CSG (Constructive Solid Geometry)
+const CSG = BABYLON.CSG;
+
+// Main Wall
+const wall = BABYLON.MeshBuilder.CreateBox("wall", { width: 10, height: 4, depth: 0.1 }, scene);
+wall.position.set(0, 2, -4);
+const wallMat = new BABYLON.StandardMaterial("wallMat", scene);
+wallMat.diffuseColor = new BABYLON.Color3(0.8, 0.8, 0.9);
+wall.material = wallMat;
+
+// Create Door Opening in Wall
+const doorOpening = BABYLON.MeshBuilder.CreateBox("doorOpening", { width: 1.2, height: 2, depth: 0.2 }, scene);
+doorOpening.position.set(-2, 1, -3.95);
+
+// Subtract Door Opening from Wall
+const wallCSG = BABYLON.CSG.FromMesh(wall);
+const doorCSG = BABYLON.CSG.FromMesh(doorOpening);
+const wallWithDoor = wallCSG.subtract(doorCSG).toMesh("wallWithDoor", wallMat, scene);
+
+// Clean up temporary meshes
+wall.dispose();
+doorOpening.dispose();
+
+// 🚪 CREATE DOOR
+const door = BABYLON.MeshBuilder.CreateBox("door", { width: 1.2, height: 2, depth: 0.05 }, scene);
+door.position.set(-2, 1, -3.92); // Slight offset for depth
+const doorMat = new BABYLON.StandardMaterial("doorMat", scene);
+doorMat.diffuseColor = new BABYLON.Color3(0.5, 0.3, 0.1);
+door.material = doorMat;
+
+// Set door pivot (hinge)
+door.setPivotMatrix(BABYLON.Matrix.Translation(0.6, 0, 0)); // Pivot on the edge
+
+// 🚪 DOOR ANIMATION
+const doorAnimation = new BABYLON.Animation(
+    "doorAnimation",
+    "rotation.y",
+    30,
+    BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+    BABYLON.Animation.ANIMATIONLOOPMODE_YOYO
+);
+
+const doorKeys = [
+    { frame: 0, value: 0 },             // Closed
+    { frame: 30, value: -Math.PI / 4 }  // Slightly Open (45°)
+];
+
+doorAnimation.setKeys(doorKeys);
+door.animations = [doorAnimation];
+
+// 🖱️ TOGGLE DOOR OPEN/CLOSE ON CLICK
+let isDoorOpen = false;
+scene.onPointerDown = () => {
+    isDoorOpen = !isDoorOpen;
+    scene.beginAnimation(door, 0, 30, false);
+};
+
+
+ 
+  // const door = BABYLON.MeshBuilder.CreateBox(
+  //   "door",
+  //   { width: 1.5, height: 2.5, depth: 0.1 },
+  //   scene
+  // );
+  // door.position.set(3, 1.25, 5.1); // Slightly beyond the wall
+  // const doorMat = new BABYLON.StandardMaterial("doorMat", scene);
+  // doorMat.diffuseColor = new BABYLON.Color3(0, 0, 0);
+  // door.material = doorMat;
+
+  // // Add a Door Handle
+  // const handle = BABYLON.MeshBuilder.CreateCylinder(
+  //   "handle",
+  //   { diameter: 0.1, height: 0.2 },
+  //   scene
+  // );
+  // handle.position.set(-2.5, 1.25, -5.05);
+  // const handleMat = new BABYLON.StandardMaterial("handleMat", scene);
+  // handleMat.diffuseColor = new BABYLON.Color3(0.8, 0.8, 0.9);
+  // handle.material = handleMat;
 };
 
 createDoor(scene);
