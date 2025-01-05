@@ -153,8 +153,6 @@ createTree(-10, -10);
 createTree(10, 10);
 createTree(-10, 5);
 
-
-  
   
 engine.runRenderLoop(function() {
     scene.render();

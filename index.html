@@ -13,11 +13,17 @@
             margin:0;
         }
         </style>
+        <!-- <script src="https://cdn.babylonjs.com/babylon.js"></script> -->
         <script src="https://cdn.babylonjs.com/babylon.js"></script>
+<!-- <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script> -->
+<script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/earcut@2.2.4/dist/earcut.min.js"></script>
+
         
     </head>
     <body>
         <canvas id="renderCanvas"></canvas>
+        <script src="bank.js"></script>
         <!-- <script>
 
     // Initialize Babylon.js Scene
@@ -238,7 +244,7 @@ ground.receiveShadows = true;
         </script>
     -->
 
-    <script>
+    <!-- <script>
 
 const canvas = document.getElementById("renderCanvas");
       const engine = new BABYLON.Engine(canvas, true);
@@ -478,7 +484,7 @@ shadowGenerator.useBlurExponentialShadowMap = true;
 
 scene.getMeshByName("floor").receiveShadows = true;
 
-    </script>
+    </script> -->
     <!-- <script>
        const canvas = document.getElementById("renderCanvas");
       const engine = new BABYLON.Engine(canvas, true);
@@ -667,6 +673,103 @@ light.intensity = 0.7;
 const shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
 shadowGenerator.addShadowCaster(scene.getMeshByName("door"));
 shadowGenerator.addShadowCaster(scene.getMeshByName("desk"));
+    </script> -->
+    <!-- <script>
+// Initialize Babylon.js Scene
+const canvas = document.getElementById("renderCanvas");
+const engine = new BABYLON.Engine(canvas, true);
+
+const createScene = () => {
+    const scene = new BABYLON.Scene(engine);
+
+    // 📸 CAMERA
+    const camera = new BABYLON.ArcRotateCamera("camera", Math.PI / 2, Math.PI / 4, 15, new BABYLON.Vector3(0, 2, 0), scene);
+    camera.attachControl(canvas, true);
+
+    // 💡 LIGHT
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+
+    // 🏢 FLOOR
+    const floor = BABYLON.MeshBuilder.CreateGround("floor", { width: 15, height: 15 }, scene);
+    const floorMat = new BABYLON.StandardMaterial("floorMat", scene);
+    floorMat.diffuseColor = new BABYLON.Color3(0.6, 0.6, 0.6);
+    floor.material = floorMat;
+
+    // 🏦 BANK BUILDING
+    const bankMat = new BABYLON.StandardMaterial("bankMat", scene);
+    bankMat.diffuseColor = new BABYLON.Color3(0.8, 0.8, 0.9);
+
+    // Front Wall with Door
+    const frontWall = BABYLON.MeshBuilder.CreateBox("frontWall", { width: 10, height: 5, depth: 0.3 }, scene);
+    frontWall.position.set(0, 2.5, -5);
+    frontWall.material = bankMat;
+
+    // Side Walls
+    const sideWallLeft = BABYLON.MeshBuilder.CreateBox("sideWallLeft", { width: 0.3, height: 5, depth: 10 }, scene);
+    sideWallLeft.position.set(-5, 2.5, 0);
+    sideWallLeft.material = bankMat;
+
+    const sideWallRight = BABYLON.MeshBuilder.CreateBox("sideWallRight", { width: 0.3, height: 5, depth: 10 }, scene);
+    sideWallRight.position.set(5, 2.5, 0);
+    sideWallRight.material = bankMat;
+
+    // Roof
+    const roof = BABYLON.MeshBuilder.CreateBox("roof", { width: 10, height: 0.3, depth: 10 }, scene);
+    roof.position.set(0, 5, 0);
+    roof.material = bankMat;
+
+    // 🚪 ENTRY DOOR
+    const door = BABYLON.MeshBuilder.CreateBox("door", { width: 2, height: 3, depth: 0.1 }, scene);
+    door.position.set(0, 1.5, -4.9);
+    const doorMat = new BABYLON.StandardMaterial("doorMat", scene);
+    doorMat.diffuseColor = new BABYLON.Color3(0.5, 0.3, 0.1);
+    door.material = doorMat;
+
+    // 🪧 ENTRY SIGN ABOVE DOOR
+    const entrySign = BABYLON.MeshBuilder.CreatePlane("entrySign", { width: 3, height: 1 }, scene);
+    entrySign.position.set(0, 3.5, -4.85);
+    const entrySignMat = new BABYLON.StandardMaterial("entrySignMat", scene);
+    entrySignMat.diffuseColor = new BABYLON.Color3(0.2, 0.2, 0.8);
+    entrySign.material = entrySignMat;
+
+    // 📜 ADD TEXT TO ENTRY SIGN
+    const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(entrySign);
+    const entryText = new BABYLON.GUI.TextBlock();
+    entryText.text = "SQE HOLDINGS";
+    entryText.color = "blue";
+    entryText.fontSize = 24;
+    advancedTexture.addControl(entryText);
+
+    // 🪧 BANK NAME SIGN
+    const bankSign = BABYLON.MeshBuilder.CreatePlane("bankSign", { width: 6, height: 1.5 }, scene);
+    bankSign.position.set(0, 4.7, -4.85);
+    const bankSignMat = new BABYLON.StandardMaterial("bankSignMat", scene);
+    bankSignMat.diffuseColor = new BABYLON.Color3(0.1, 0.4, 0.6);
+    bankSign.material = bankSignMat;
+
+    // 📜 ADD TEXT TO BANK SIGN
+    const bankTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(bankSign);
+    const bankText = new BABYLON.GUI.TextBlock();
+    bankText.text = "MY BANK";
+    bankText.color = "white";
+    bankText.fontSize = 32;
+    bankTexture.addControl(bankText);
+
+    return scene;
+};
+
+// 🎮 Start Babylon.js Scene
+const scene = createScene();
+engine.runRenderLoop(() => {
+    scene.render();
+});
+
+// Resize Event
+window.addEventListener("resize", () => {
+    engine.resize();
+});
+
+
 
 
     </script> -->
